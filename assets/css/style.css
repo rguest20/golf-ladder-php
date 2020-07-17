@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    background-color: #fcfce6
+}
+
+body {
+  font-family: sans-serif;
+  font-weight: 300;
+  color: #789;
+}
+
+header{
+    height: 150px;
+    font-size: 240%;
+    float: left;
+    margin-bottom: 20px;
+}
+
+#nav{
+  padding-top: 20px;
+  float:right;
+  font-size: 110%;
+  list-style-type: none;
+  letter-spacing: 2px;
+}
+
+#nav > li{
+  text-align:right;
+  display: inline;
+  margin-right: 20px;
+}
+
+#nav a {
+  text-decoration: none;
+  color: inherit;
+}
