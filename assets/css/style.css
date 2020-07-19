@@ -88,4 +88,8 @@ animation-fill-mode: forwards;
     #challengepic, #resultspic{
         height:300px;
     }
+
+    #gameface{
+        height: 600px;
+    }
 }
