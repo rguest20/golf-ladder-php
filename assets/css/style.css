@@ -3,6 +3,14 @@
     padding: 0;
 }
 
+@keyframes hover {
+  from {
+  }
+  to{
+    opacity: 0.5;
+  }
+}
+
 html{
     background-color: #fcfce6
 }
@@ -36,7 +44,9 @@ body {
 }
 
 #challengepic:hover{
-opacity: 0.5;
+animation-name: hover;
+animation-duration: 3s;
+animation-fill-mode: forwards;
 }
 
 #challengetxt{
@@ -55,7 +65,9 @@ opacity: 0.5;
 }
 
 #resultspic:hover{
-opacity: 0.5;
+animation-name: hover;
+animation-duration: 3s;
+animation-fill-mode: forwards;
 }
 
 #resultstxt{
