@@ -35,6 +35,10 @@ body {
     background-size: cover;
 }
 
+#challengepic:hover{
+opacity: 0.5;
+}
+
 #challengetxt{
     background-color: rgba(0,0,128,0.7);
     color: #fff;
@@ -48,6 +52,10 @@ body {
     margin: 0;
     background: url("https://upload.wikimedia.org/wikipedia/commons/e/e6/Goosen_Retief_Scorecard_2006.jpg") no-repeat center center;
     background-size: cover;    
+}
+
+#resultspic:hover{
+opacity: 0.5;
 }
 
 #resultstxt{
