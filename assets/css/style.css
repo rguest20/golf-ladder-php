@@ -76,6 +76,14 @@ animation-fill-mode: forwards;
     width: 40%;
 }
 
+#gameface{
+    height: 300px;
+    max-width: 100%
+    margin: 0;
+    background: url("https://media.defense.gov/2007/Apr/26/2000496007/-1/-1/0/070424-F-5350S-006.JPG") no-repeat ;
+    background-size: cover;
+}
+
 @media screen and (min-width: 768px){
     #challengepic, #resultspic{
         height:300px;
