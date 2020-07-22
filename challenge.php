@@ -1,3 +1,27 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+  $name = $_POST["yourname"];
+  $opponentname = $_POST["opponent"];
+} else {
+  $opponentname = "bluebanana";
+}
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "golfladder";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+$sql="SELECT * FROM ladder";
+$sql2 = "SELECT * FROM challenges";
+$ladder = mysqli_query($conn, $sql);
+$challengeData = mysqli_query($conn, $sql2);
+$challengeDataArray = $challengeData -> fetch_all(MYSQLI_ASSOC);
+$results = $ladder -> fetch_all(MYSQLI_ASSOC);
+mysqli_close ($conn);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -74,23 +98,66 @@
     <section id="challenge-form">
     <h2>Challenge Page</h2>
     <p>Please fill out the form below to initiate challenge</p>
-        <form action="challenges.php" method = "post">
-        <label for = "yourname">Your Name</label>
-        <select name="yourname" id="yourname" autofocus>
-            <option value="null">Please select an option</option>
-            <option value="Tim">Tim</option>
-            <option value="Geoff">Geoff</option>
-            <option value="Roger">Roger</option>
-            <option value="Harry">Harry</option>
-        </select>
-        <br>
-        <small>Challenges can only be made against people who are not in challenges up to 3 positions ahead of you in the ladder</small>
-        <input type = "submit" value="Input Name">
+        <?php
+          if ($opponentname == "bluebanana"){
+          echo '<form action="challenge.php" method = "post">';
+          echo '<label for = "yourname">Your Name</label>';
+          echo '<select name="yourname" id="yourname">';
+          echo '<option value="null">Please select an option</option>';
+            $output ="";
+              foreach($results as $x=>$y){
+                $output=$y['Name'];
+                echo '<option value="' . $output . '">' . $output . '</option>';
+              };
+          echo '</select>';
+          echo'<input type="submit"> <br>';
+          echo '<small>Challenges can only be made against people who are not in challenges up to 3 positions ahead of you in the ladder</small><br>';
+        } else {
+
+        };
+        if ($opponentname == "bluebanana"){
+          echo '<small>Submit your name to continue</small>';
+          echo '<input type="text" id="opponent" name = "opponent" value = "no value" hidden>';
+        } else {
+          echo '<form action="challengeout.php" method = "post">';
+          echo '<input type="text" id="yourname" name = "yourname" value = "' . $name . '" hidden>';
+          echo '<p>Your Name: ' . $name . '</p>';
+          echo '<label for = "opponentname">Who do you challenge?</label>';
+          echo '<select name="opponentname" id="opponentname">';
+          echo '<option value="basic">Pleae select an option</option>';
+          $output ="";
+            foreach($results as $x=>$y){
+              if($y['Name'] === $name){
+                $challengerRank = $y['Position'];
+              };
+            };
+
+            $potentialChallengers = array();
+            foreach($results as $x=>$y){
+              if($y['Position'] == $challengerRank - 1 or $y['Position'] == $challengerRank - 2 or $y['Position'] == $challengerRank - 3){
+                array_push($potentialChallengers, $y['Name']);
+              };
+            };
+            $alreadyInChallenge = array();
+            foreach($challengeDataArray as $x => $y){
+              array_push($alreadyInChallenge, $y['challenger']);
+              array_push($alreadyInChallenge, $y['challenged']);
+            };
+            $canBeChallenged = array_diff($potentialChallengers, $alreadyInChallenge);
+            $outputchallenge ="";
+              foreach($canBeChallenged as $x=>$y){
+                $output=$y;
+                echo '<option value="' . $output . '">' . $output . '</option>';
+              };
+              echo '<input type = "submit" value="Challenge"><br>';
+            };
+        ?>
         </form>
         </section>
     <section id="process">
         <h2>State of current challenge: <span id="actdisact">Inactive</span></h2>
-        <h3>Challenge to be completed by <?php
+        <h3>Challenge to be completed by
+        <?php
         $nextweek = time() + 14*24*60*60;
         echo '2 weeks time: '. date('d-m-Y', $nextweek) ."\n";
         ?>
